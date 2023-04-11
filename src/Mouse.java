@@ -17,6 +17,7 @@ import java.awt.*;
 		public Rectangle rec;
 		public Image pic;
 		public int hits;
+		public boolean isIntersecting;
 
 		// METHOD DEFINITION SECTION
 
@@ -32,6 +33,7 @@ import java.awt.*;
 			dy = -5;
 			isAlive = true;
 			hits = 0;
+			isIntersecting=true;
 			rec = new Rectangle(xpos, ypos, width, height);
 
 
@@ -64,7 +66,7 @@ import java.awt.*;
 				dx = -dx;
 			}
 
-			if (ypos < 0 || ypos + height > 700) {
+			if (ypos < 0 || ypos + height > 530) {
 				dy = -dy;
 			}
 

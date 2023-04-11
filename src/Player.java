@@ -19,6 +19,7 @@ public class Player {
     public boolean left;
     public boolean down;
     public boolean up;
+    public boolean isIntersecting;
 
 
     public Player(int pXpos, int pYpos, int dxParameter, int dyParameter, Image picParameter) {
@@ -31,6 +32,7 @@ public class Player {
         dy = dyParameter;
         pic = picParameter;
         isAlive = true;
+        isIntersecting=false;
         rec = new Rectangle(xpos, ypos, width, height);
 
     } // constructor

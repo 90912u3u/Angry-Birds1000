@@ -49,6 +49,13 @@ public class CheeseWorld implements Runnable, KeyListener {
     public Player angrybird;
 
     public Image background;
+    public Image winscreen;
+    public Image piggpic2;
+    public Cheese fatpigg;
+    public Image jerrypic;
+    public Cheese jerry;
+    public Image gameover;
+
 
 
 
@@ -77,13 +84,20 @@ public class CheeseWorld implements Runnable, KeyListener {
         PiggPic = Toolkit.getDefaultToolkit().getImage("Unknown jj.jpeg");
         Angrybirdpic = Toolkit.getDefaultToolkit().getImage("Unknown.jpeg");
         background = Toolkit.getDefaultToolkit().getImage("An-image-of-an-Angry-Birds-level.ppm.png");
+        winscreen=Toolkit.getDefaultToolkit().getImage("winfinal.jpg");
+        piggpic2=Toolkit.getDefaultToolkit().getImage("images.jpeg");
+        jerrypic=Toolkit.getDefaultToolkit().getImage("jerry.gif");
+        gameover=Toolkit.getDefaultToolkit().getImage("6591069_game_over.jpg");
+
 
 
         //create (construct) the objects needed for the game
 
-        Pigg = new Mouse(200, 300, 4, 4, PiggPic);
-        thepigg = new Cheese(400, 300, 3, -4, piggPic);
-        angrybird = new Player(0,200,0,0,Angrybirdpic);
+        Pigg = new Mouse(500, 300, 4, 4, PiggPic);
+        thepigg = new Cheese(400, 300, 10, 10, piggPic);
+        angrybird = new Player(130,250,60,60,Angrybirdpic);
+        fatpigg=new Cheese(700,300,4,5,piggpic2);
+        jerry=new Cheese(800,100,1,2,jerrypic);
 
 
 
@@ -99,6 +113,8 @@ public class CheeseWorld implements Runnable, KeyListener {
         Pigg.move();
         thepigg.move();
         angrybird.move();
+        fatpigg.move();
+        jerry.move();
 
 
     }
@@ -107,12 +123,14 @@ public class CheeseWorld implements Runnable, KeyListener {
 
     }
 
+
     public void run() {
         while (true) {
             moveThings();           //move all the game objects
             checkIntersections();   // check character crashes
             render();               // paint the graphics
-            pause(20);         // sleep for 20 ms
+            pause(20);
+            collison();// sleep for 20 ms
         }
     }
 
@@ -122,9 +140,25 @@ public class CheeseWorld implements Runnable, KeyListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         //draw characters to the screen
+        g.drawImage(background, 0,0, 1000, 650, null);
+        
         g.drawImage(PiggPic, Pigg.xpos,Pigg.ypos, Pigg.width, Pigg.height, null);
         g.drawImage(piggPic, thepigg.xpos, thepigg.ypos, thepigg.width, thepigg.height, null);
         g.drawImage(Angrybirdpic,angrybird.xpos,angrybird.ypos,angrybird.height, angrybird.width, null);
+        g.drawImage(piggpic2,fatpigg.xpos, fatpigg.ypos, fatpigg.height, fatpigg.width,null );
+        g.drawImage(jerrypic,jerry.xpos, jerry.ypos, jerry.height, jerry.width, null);
+//        System.out.println(angrybird.xpos);
+        if(angrybird.xpos >830){
+
+            g.drawImage(winscreen, 0,0, 1000, 650, null);
+
+        }
+        if(angrybird.height > 700 && angrybird.width> 700){
+
+            g.drawImage(gameover,0,0,1000,650,null);
+        }
+
+
 
         g.dispose();
         bufferStrategy.show();
@@ -177,9 +211,35 @@ public class CheeseWorld implements Runnable, KeyListener {
     public void keyTyped(KeyEvent event) {
         // handles a press of a character key (any key that can be printed but not keys like SHIFT)
         // we won't be using this method, but it still needs to be in your program
-    }//keyTyped()
+    }//ke
 
 
+
+    public void collison(){
+        if(angrybird.rec.intersects(thepigg.rec)&& angrybird.isIntersecting==false){
+
+            angrybird.width= angrybird.width+1;
+            angrybird.height= angrybird.height+1;
+
+
+
+
+        }
+        if(angrybird.rec.intersects(Pigg.rec)&& angrybird.isIntersecting==false){
+            angrybird.width = angrybird.width+1;
+            angrybird.height= angrybird.height+1;
+        }
+
+        if(angrybird.rec.intersects(fatpigg.rec) && angrybird.isIntersecting==false){
+            angrybird.width= angrybird.width+1;
+            angrybird.height= angrybird.height+1;
+        }
+        if(angrybird.rec.intersects(jerry.rec) && angrybird.isIntersecting==false){
+            angrybird.width= angrybird.width-3;
+            angrybird.height= angrybird.height-3;
+        }
+    }
+    //
     //Graphics setup method
     public void setUpGraphics() {
         frame = new JFrame("CheeseWorld");   //Create the program window or frame.  Names it.

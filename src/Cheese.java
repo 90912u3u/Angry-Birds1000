@@ -18,6 +18,7 @@ public class Cheese {
     public Rectangle rec;
     public Image pic;
     public int hits;
+    public boolean isIntersecting;
 
     // METHOD DEFINITION SECTION
 
@@ -33,6 +34,7 @@ public class Cheese {
         dy = -5;
         isAlive = true;
         hits = 0;
+        isIntersecting=true;
         rec = new Rectangle(xpos, ypos, width, height);
 
 
@@ -50,6 +52,7 @@ public class Cheese {
         pic = picParameter;
         isAlive = true;
         hits = 0;
+
         rec = new Rectangle(xpos, ypos, width, height);
 
 
@@ -65,7 +68,7 @@ public class Cheese {
             dx = -dx;
         }
 
-        if (ypos < 0 || ypos + height > 700) {
+        if (ypos < 0 || ypos + height > 530) {
             dy = -dy;
         }
 
